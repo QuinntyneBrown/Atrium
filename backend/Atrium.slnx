@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Atrium.Api/Atrium.Api.csproj" />
+    <Project Path="src/Atrium.Application/Atrium.Application.csproj" />
+    <Project Path="src/Atrium.Domain/Atrium.Domain.csproj" />
+    <Project Path="src/Atrium.Infrastructure/Atrium.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Atrium.Api.AcceptanceTests/Atrium.Api.AcceptanceTests.csproj" />
+    <Project Path="tests/Atrium.Application.UnitTests/Atrium.Application.UnitTests.csproj" />
+  </Folder>
+</Solution>

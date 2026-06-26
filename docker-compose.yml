@@ -1,0 +1,11 @@
+# Atrium local infrastructure.
+# Ollama runs natively on the host (http://localhost:11434) and is NOT containerised here.
+services:
+  plantuml-server:
+    image: plantuml/plantuml-server:jetty
+    container_name: atrium-plantuml
+    ports:
+      - "8080:8080"
+    environment:
+      - PLANTUML_LIMIT_SIZE=16384
+    restart: unless-stopped
