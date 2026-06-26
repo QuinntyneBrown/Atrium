@@ -1,0 +1,18 @@
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.editor__heading {
+  margin: 0 0 0.5rem;
+}
+
+.editor__field {
+  width: 100%;
+}
+
+.editor__actions {
+  display: flex;
+  justify-content: flex-end;
+}

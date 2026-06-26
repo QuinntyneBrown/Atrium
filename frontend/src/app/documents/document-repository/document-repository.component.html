@@ -1,0 +1,75 @@
+<div class="repository">
+  <div class="repository__toolbar">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      data-testid="new-document"
+      (click)="onNew()"
+    >
+      <mat-icon>add</mat-icon>
+      New
+    </button>
+
+    <mat-form-field appearance="outline" class="repository__filter">
+      <mat-label>Type</mat-label>
+      <mat-select
+        data-testid="document-type-filter"
+        [(ngModel)]="selectedType"
+        (selectionChange)="onFilterChange()"
+      >
+        <mat-option [value]="''">All</mat-option>
+        <mat-option *ngFor="let type of types" [value]="type">{{ type }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <table
+    mat-table
+    [dataSource]="documents"
+    data-testid="document-list"
+    class="repository__table"
+  >
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let row" data-testid="document-name">{{ row.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Type</th>
+      <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="modifiedOnUtc">
+      <th mat-header-cell *matHeaderCellDef>Modified</th>
+      <td mat-cell *matCellDef="let row">{{ row.modifiedOnUtc | date: 'short' }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          type="button"
+          color="warn"
+          aria-label="Delete document"
+          data-testid="delete-document"
+          (click)="onDelete(row, $event)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns"
+      data-testid="document-row"
+      class="repository__row"
+      (click)="onSelect(row)"
+    ></tr>
+  </table>
+
+  <p *ngIf="documents.length === 0" class="repository__empty">No documents yet.</p>
+</div>

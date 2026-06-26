@@ -1,0 +1,15 @@
+<div class="chat-workspace">
+  <div class="chat-workspace__left" cdkDropListGroup>
+    <section class="chat-workspace__palette">
+      <app-document-palette></app-document-palette>
+    </section>
+
+    <section class="chat-workspace__builder">
+      <app-prompt-builder (assembled)="onAssembled($event)"></app-prompt-builder>
+    </section>
+  </div>
+
+  <section class="chat-workspace__chat">
+    <app-chat [systemPrompt]="systemPrompt"></app-chat>
+  </section>
+</div>

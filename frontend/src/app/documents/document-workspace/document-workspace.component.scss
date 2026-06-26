@@ -1,0 +1,34 @@
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  grid-template-areas:
+    'repository editor'
+    'preview preview';
+  gap: 2rem;
+  align-items: start;
+}
+
+.workspace__repository {
+  grid-area: repository;
+  min-width: 0;
+}
+
+.workspace__editor {
+  grid-area: editor;
+  min-width: 0;
+}
+
+.workspace__preview {
+  grid-area: preview;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .workspace {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'repository'
+      'editor'
+      'preview';
+  }
+}

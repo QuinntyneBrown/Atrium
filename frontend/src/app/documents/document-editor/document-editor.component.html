@@ -1,0 +1,57 @@
+<div class="editor">
+  <h2 class="editor__heading">{{ isEditing ? 'Edit document' : 'New document' }}</h2>
+
+  <mat-form-field appearance="outline" class="editor__field">
+    <mat-label>Name</mat-label>
+    <input
+      matInput
+      data-testid="document-name-input"
+      [(ngModel)]="name"
+    />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="editor__field">
+    <mat-label>Type</mat-label>
+    <mat-select
+      data-testid="document-type-select"
+      [(ngModel)]="type"
+      [disabled]="isEditing"
+    >
+      <mat-option *ngFor="let documentType of types" [value]="documentType">
+        {{ documentType }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="editor__field">
+    <mat-label>Content</mat-label>
+    <textarea
+      matInput
+      rows="12"
+      data-testid="document-content-input"
+      [(ngModel)]="content"
+    ></textarea>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="editor__field">
+    <mat-label>Tags</mat-label>
+    <input
+      matInput
+      data-testid="document-tags-input"
+      [(ngModel)]="tags"
+    />
+    <mat-hint>Comma-separated</mat-hint>
+  </mat-form-field>
+
+  <div class="editor__actions">
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      data-testid="save-document"
+      (click)="save()"
+    >
+      Save
+    </button>
+  </div>
+</div>

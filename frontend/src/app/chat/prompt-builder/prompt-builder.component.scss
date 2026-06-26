@@ -1,0 +1,60 @@
+.prompt-builder {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+
+  &__heading {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__body {
+    margin: 0;
+    padding: 0.75rem;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.04);
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: var(--mat-sys-typescale-body-medium-font, monospace);
+  }
+
+  &__dropzone {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border: 2px dashed rgba(0, 0, 0, 0.24);
+    border-radius: 8px;
+    min-height: 44px;
+    justify-content: center;
+
+    &.cdk-drop-list-receiving {
+      border-color: #3f51b5;
+      background: rgba(63, 81, 181, 0.06);
+    }
+  }
+
+  &__dropzone-hint {
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__save {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+}

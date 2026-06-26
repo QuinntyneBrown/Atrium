@@ -8,5 +8,6 @@
   <Folder Name="/tests/">
     <Project Path="tests/Atrium.Api.AcceptanceTests/Atrium.Api.AcceptanceTests.csproj" />
     <Project Path="tests/Atrium.Application.UnitTests/Atrium.Application.UnitTests.csproj" />
+    <Project Path="tests/Atrium.Infrastructure.UnitTests/Atrium.Infrastructure.UnitTests.csproj" />
   </Folder>
 </Solution>

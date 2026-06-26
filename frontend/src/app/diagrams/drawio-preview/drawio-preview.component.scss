@@ -1,0 +1,21 @@
+.drawio {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.drawio__note {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.54);
+  font-style: italic;
+}
+
+.drawio__xml {
+  margin: 0;
+  overflow: auto;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}

@@ -1,0 +1,75 @@
+<div class="prompt-builder">
+  <h2 class="prompt-builder__heading">Prompt builder</h2>
+
+  <mat-form-field appearance="outline" class="prompt-builder__field">
+    <mat-label>Template</mat-label>
+    <mat-select
+      data-testid="prompt-template-select"
+      [(ngModel)]="selectedTemplate"
+      (selectionChange)="selectTemplate(selectedTemplate!)"
+    >
+      <mat-option *ngFor="let template of templates" [value]="template">
+        {{ template.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div
+    cdkDropList
+    class="prompt-builder__dropzone"
+    data-testid="prompt-dropzone"
+    (cdkDropListDropped)="onDocumentDropped($event)"
+  >
+    <span class="prompt-builder__dropzone-hint">Drop a document here to attach it as context</span>
+    <mat-chip-set *ngIf="attached.length" aria-label="Attached documents">
+      <mat-chip *ngFor="let name of attached" data-testid="attached-document">{{ name }}</mat-chip>
+    </mat-chip-set>
+  </div>
+
+  <ng-container *ngIf="selectedTemplate">
+    <pre class="prompt-builder__body" data-testid="prompt-body">{{ selectedTemplate.body }}</pre>
+
+    <mat-form-field
+      *ngFor="let placeholder of placeholders"
+      appearance="outline"
+      class="prompt-builder__field"
+    >
+      <mat-label>{{ placeholder }}</mat-label>
+      <textarea
+        matInput
+        rows="2"
+        data-testid="prompt-placeholder"
+        [name]="placeholder"
+        [(ngModel)]="values[placeholder]"
+      ></textarea>
+    </mat-form-field>
+
+    <div class="prompt-builder__actions">
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        data-testid="prompt-run"
+        (click)="run()"
+      >
+        Use in chat
+      </button>
+    </div>
+
+    <div class="prompt-builder__save">
+      <mat-form-field appearance="outline" class="prompt-builder__field">
+        <mat-label>Save as custom template</mat-label>
+        <input matInput data-testid="prompt-name" name="customName" [(ngModel)]="customName" />
+      </mat-form-field>
+      <button
+        mat-button
+        type="button"
+        data-testid="prompt-save"
+        [disabled]="!customName.trim()"
+        (click)="saveAsCustom()"
+      >
+        Save
+      </button>
+    </div>
+  </ng-container>
+</div>

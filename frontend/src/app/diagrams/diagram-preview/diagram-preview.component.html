@@ -1,0 +1,6 @@
+<div class="diagram" data-testid="diagram-svg" [innerHTML]="safeSvg"></div>
+
+<p *ngIf="!safeSvg && !renderError" class="diagram__placeholder">Rendering diagram…</p>
+<p *ngIf="renderError" class="diagram__error" data-testid="diagram-error">
+  Could not render the diagram. Check that the PlantUML server is running.
+</p>

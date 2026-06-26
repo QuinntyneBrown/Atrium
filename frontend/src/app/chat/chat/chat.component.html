@@ -1,0 +1,60 @@
+<div class="chat">
+  <mat-form-field appearance="outline" class="chat__model">
+    <mat-label>Model</mat-label>
+    <mat-select data-testid="chat-model-select" [(ngModel)]="selectedModel">
+      <mat-option *ngFor="let model of models" [value]="model">{{ model }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="chat__messages" data-testid="chat-messages">
+    <div
+      *ngFor="let message of messages"
+      class="chat__message"
+      [class.chat__message--user]="message.role === 'user'"
+      [class.chat__message--assistant]="message.role === 'assistant'"
+      data-testid="chat-message"
+    >
+      <span class="chat__role">{{ message.role }}</span>
+
+      <ng-container [ngSwitch]="message.role">
+        <div
+          *ngSwitchCase="'assistant'"
+          class="chat__content"
+          data-testid="chat-assistant-message"
+        >
+          {{ message.content }}
+        </div>
+        <div *ngSwitchDefault class="chat__content">{{ message.content }}</div>
+      </ng-container>
+    </div>
+
+    <p *ngIf="messages.length === 0" class="chat__empty">
+      Ask the model a question to get started.
+    </p>
+  </div>
+
+  <div class="chat__composer">
+    <mat-form-field appearance="outline" class="chat__input">
+      <mat-label>Message</mat-label>
+      <textarea
+        matInput
+        rows="3"
+        data-testid="chat-input"
+        [(ngModel)]="draft"
+        (keydown.enter)="$event.preventDefault(); send()"
+      ></textarea>
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="button"
+      data-testid="chat-send"
+      [disabled]="streaming"
+      (click)="send()"
+    >
+      <mat-icon>send</mat-icon>
+      Send
+    </button>
+  </div>
+</div>

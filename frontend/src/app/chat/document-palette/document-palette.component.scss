@@ -1,0 +1,58 @@
+.palette {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+
+  &__heading {
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  &__hint {
+    margin: 0 0 0.5rem;
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 6px;
+    margin-bottom: 0.4rem;
+    cursor: grab;
+    background: #fff;
+  }
+
+  &__name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__type {
+    font-size: 0.75rem;
+    opacity: 0.6;
+  }
+
+  &__empty {
+    opacity: 0.6;
+  }
+}
+
+.cdk-drag-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}

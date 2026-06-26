@@ -1,0 +1,22 @@
+<div class="document-preview" data-testid="document-preview">
+  <ng-container *ngIf="document as doc; else empty" [ngSwitch]="doc.type">
+    <app-diagram-preview
+      *ngSwitchCase="'Puml'"
+      [document]="doc"
+    ></app-diagram-preview>
+
+    <app-markdown-preview
+      *ngSwitchCase="'Markdown'"
+      [content]="doc.content"
+    ></app-markdown-preview>
+
+    <app-drawio-preview
+      *ngSwitchCase="'Drawio'"
+      [content]="doc.content"
+    ></app-drawio-preview>
+  </ng-container>
+
+  <ng-template #empty>
+    <p class="document-preview__empty">Select a document to preview.</p>
+  </ng-template>
+</div>

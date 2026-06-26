@@ -1,0 +1,11 @@
+.markdown {
+  display: block;
+  line-height: 1.6;
+}
+
+.markdown :where(pre) {
+  overflow: auto;
+  padding: 0.75rem;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+}

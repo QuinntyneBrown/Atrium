@@ -1,0 +1,19 @@
+<div class="workspace">
+  <section class="workspace__repository">
+    <app-document-repository
+      (selectDocument)="onSelect($event)"
+      (newDocument)="onNew()"
+    ></app-document-repository>
+  </section>
+
+  <section class="workspace__editor">
+    <app-document-editor
+      [document]="selected"
+      (saved)="onSaved()"
+    ></app-document-editor>
+  </section>
+
+  <section class="workspace__preview">
+    <app-document-preview [document]="selected"></app-document-preview>
+  </section>
+</div>

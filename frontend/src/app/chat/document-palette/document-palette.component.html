@@ -1,0 +1,26 @@
+<div class="palette">
+  <h2 class="palette__heading">Documents</h2>
+  <p class="palette__hint">Drag a document into the prompt builder to attach it as context.</p>
+
+  <div
+    cdkDropList
+    class="palette__list"
+    data-testid="document-palette"
+    [cdkDropListData]="documents"
+    [cdkDropListSortingDisabled]="true"
+  >
+    <div
+      *ngFor="let document of documents"
+      cdkDrag
+      class="palette__item"
+      data-testid="palette-document"
+      [cdkDragData]="document"
+    >
+      <mat-icon class="palette__icon">description</mat-icon>
+      <span class="palette__name" data-testid="palette-document-name">{{ document.name }}</span>
+      <span class="palette__type">{{ document.type }}</span>
+    </div>
+
+    <p *ngIf="documents.length === 0" class="palette__empty">No documents yet.</p>
+  </div>
+</div>
