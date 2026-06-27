@@ -23,9 +23,25 @@
   }
 }
 
-@media (max-width: 1100px) {
+// The two-column layout only needs ~790px, so keep it down to a genuinely narrow
+// viewport before collapsing to a single column. This keeps scaled-down desktop
+// windows in the two-column layout (where the chat scrolls correctly).
+@media (max-width: 860px) {
+  // Single column for narrow viewports. The page scrolls between the stacked
+  // panels; the chat panel keeps a tall fixed height so its messages area
+  // scrolls internally and the composer stays within the panel (it never
+  // collapses, regardless of how tall the palette/builder content is).
   .chat-workspace {
     grid-template-columns: 1fr;
     height: auto;
+  }
+
+  .chat-workspace__left {
+    // Let the palette and builder take their natural height when stacked.
+    grid-template-rows: auto auto;
+  }
+
+  .chat-workspace__chat {
+    height: 70vh;
   }
 }
