@@ -23,13 +23,14 @@ describe('ChatService', () => {
   afterEach(() => httpMock.verify());
 
   it('getModels() issues GET /api/chat/models and maps the body', () => {
-    let received: string[] | undefined;
-    service.getModels().subscribe((models) => (received = models));
+    let received: { models: string[]; defaultModel: string } | undefined;
+    service.getModels().subscribe((result) => (received = result));
 
     const req = httpMock.expectOne('/api/chat/models');
     expect(req.request.method).toBe('GET');
 
-    req.flush(['llama3', 'mistral']);
-    expect(received).toEqual(['llama3', 'mistral']);
+    const body = { models: ['llama3', 'mistral'], defaultModel: 'mistral' };
+    req.flush(body);
+    expect(received).toEqual(body);
   });
 });

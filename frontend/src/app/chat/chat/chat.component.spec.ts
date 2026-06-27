@@ -15,7 +15,11 @@ describe('ChatComponent', () => {
   let stream$: Subject<string>;
 
   beforeEach(async () => {
-    chatService = { getModels: jest.fn().mockReturnValue(of(['llama3', 'mistral'])) };
+    chatService = {
+      getModels: jest
+        .fn()
+        .mockReturnValue(of({ models: ['llama3', 'mistral'], defaultModel: 'llama3' })),
+    };
     stream$ = new Subject<string>();
     chatSignalr = { stream: jest.fn().mockReturnValue(stream$.asObservable()) };
 
@@ -36,13 +40,27 @@ describe('ChatComponent', () => {
     return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
   }
 
-  it('populates the model select from getModels and defaults to the first', () => {
+  it('populates the model select from getModels and pre-selects the configured default', () => {
+    chatService.getModels.mockReturnValue(
+      of({ models: ['llama3', 'mistral'], defaultModel: 'mistral' }),
+    );
+
     fixture.detectChanges();
 
     expect(chatService.getModels).toHaveBeenCalledTimes(1);
     expect(component.models).toEqual(['llama3', 'mistral']);
-    expect(component.selectedModel).toBe('llama3');
+    expect(component.selectedModel).toBe('mistral');
     expect(query('chat-model-select')).not.toBeNull();
+  });
+
+  it('falls back to the first model when the configured default is not available', () => {
+    chatService.getModels.mockReturnValue(
+      of({ models: ['llama3', 'mistral'], defaultModel: 'qwen2.5-coder:14b' }),
+    );
+
+    fixture.detectChanges();
+
+    expect(component.selectedModel).toBe('llama3');
   });
 
   it('sends a user message and accumulates streamed tokens into an assistant message', () => {

@@ -1,6 +1,7 @@
 using System.Data.Common;
 using Atrium.Api.AcceptanceTests.Fakes;
 using Atrium.Application.Abstractions;
+using Atrium.Application.Features.Chat;
 using Atrium.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -41,6 +42,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             // External LLM replaced with a deterministic fake — tests never hit Ollama.
             services.RemoveAll<IOllamaClient>();
             services.AddSingleton<IOllamaClient>(new FakeOllamaClient());
+
+            // Pin the default model to one the fake actually serves, so the models endpoint's
+            // defaultModel is deterministic and decoupled from the real configured model name.
+            services.RemoveAll<OllamaOptions>();
+            services.AddSingleton(new OllamaOptions { DefaultModel = FakeOllamaClient.Models[0] });
         });
     }
 

@@ -17,7 +17,10 @@ describe('ChatWorkspaceComponent', () => {
       imports: [ChatWorkspaceComponent],
       providers: [
         provideNoopAnimations(),
-        { provide: ChatService, useValue: { getModels: () => of([]) } },
+        {
+          provide: ChatService,
+          useValue: { getModels: () => of({ models: [], defaultModel: '' }) },
+        },
         { provide: ChatSignalrService, useValue: { stream: () => EMPTY } },
         {
           provide: PromptTemplateService,

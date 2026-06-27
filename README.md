@@ -20,15 +20,18 @@ ships as a default attachable resource (CHECK / CORRECT / AUTHOR modes).
 - .NET SDK capable of building `net8.0` (the repo pins a stable SDK via `global.json`)
 - Node 20 LTS (recommended for Angular 17 tooling)
 - Docker (for the PlantUML render server)
-- Ollama running locally (`ollama serve`), with at least one model pulled
+- Ollama running locally (`ollama serve`), with the default coding model pulled:
+  `ollama pull qwen2.5-coder:14b` (the app's configured default; a strong local coder that fits a 16 GB host).
+  On a tighter machine, `ollama pull qwen2.5-coder:7b` is a lighter, faster alternative — pick it in the chat model picker.
 
 ## Run (full stack in Docker)
 
 One command brings up the frontend, API, and PlantUML renderer (Ollama stays native on the host):
 
 ```bash
-ollama serve                 # on the host (:11434), with a model pulled
-docker compose up --build    # frontend :8088, API :5080, plantuml :8080
+ollama pull qwen2.5-coder:14b   # one-time: the default coding model
+ollama serve                    # on the host (:11434)
+docker compose up --build       # frontend :8088, API :5080, plantuml :8080
 ```
 
 Then open **http://localhost:8088**. The frontend (nginx) reverse-proxies `/api` and `/hubs`
@@ -40,6 +43,7 @@ with `docker compose down` (add `-v` to also drop the database volume).
 
 ```bash
 docker compose up -d plantuml-server          # PlantUML renderer on :8080 (just this service)
+ollama pull qwen2.5-coder:14b                 # one-time: the default coding model
 ollama serve                                  # Ollama on :11434 (if not already running)
 dotnet run --project backend/src/Atrium.Api   # API on :5080
 cd frontend && npm start                      # Angular on :4200

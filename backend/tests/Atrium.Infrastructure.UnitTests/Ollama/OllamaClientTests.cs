@@ -36,7 +36,7 @@ public class OllamaClientTests
     [Test]
     public async Task GetModelsAsync_ReturnsModelNames()
     {
-        const string json = "{\"models\":[{\"name\":\"qwen2.5-coder:1.5b\"},{\"name\":\"llama3.1\"}]}";
+        const string json = "{\"models\":[{\"name\":\"qwen2.5-coder:14b\"},{\"name\":\"llama3.1\"}]}";
 
         using var client = new HttpClient(new StubHttpMessageHandler(_ =>
             new HttpResponseMessage(HttpStatusCode.OK)
@@ -50,7 +50,7 @@ public class OllamaClientTests
 
         var models = await ollama.GetModelsAsync();
 
-        Assert.That(models, Is.EqualTo(new[] { "qwen2.5-coder:1.5b", "llama3.1" }));
+        Assert.That(models, Is.EqualTo(new[] { "qwen2.5-coder:14b", "llama3.1" }));
     }
 
     [Test]

@@ -1,4 +1,6 @@
 using System.Net.Http.Json;
+using Atrium.Api.AcceptanceTests.Fakes;
+using Atrium.Application.Features.Chat;
 
 namespace Atrium.Api.AcceptanceTests.Features.Chat;
 
@@ -23,10 +25,12 @@ public class ChatModelsAcceptanceTests
     }
 
     [Test]
-    public async Task GetModels_ReturnsModelsFromOllama()
+    public async Task GetModels_ReturnsModelsAndConfiguredDefaultFromOllama()
     {
-        var models = await _client.GetFromJsonAsync<List<string>>("/api/chat/models");
+        var result = await _client.GetFromJsonAsync<ChatModelsResult>("/api/chat/models");
 
-        Assert.That(models, Is.EqualTo(new[] { "fake-model-a", "fake-model-b" }));
+        Assert.That(result, Is.Not.Null);
+        Assert.That(result!.Models, Is.EqualTo(FakeOllamaClient.Models));
+        Assert.That(result.DefaultModel, Is.EqualTo(FakeOllamaClient.Models[0]));
     }
 }

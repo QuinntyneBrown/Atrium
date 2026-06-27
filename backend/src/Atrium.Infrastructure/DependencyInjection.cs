@@ -1,4 +1,5 @@
 using Atrium.Application.Abstractions;
+using Atrium.Application.Features.Chat;
 using Atrium.Infrastructure.Ollama;
 using Atrium.Infrastructure.Persistence;
 using Atrium.Infrastructure.PlantUml;
@@ -28,6 +29,10 @@ public static class DependencyInjection
             client.BaseAddress = new Uri(ollamaBaseUrl.TrimEnd('/') + "/");
             client.Timeout = Timeout.InfiniteTimeSpan; // chat streams can run long
         });
+
+        // The model the chat UI pre-selects when it is present on the host.
+        var ollamaDefaultModel = configuration["Ollama:DefaultModel"] ?? "qwen2.5-coder:14b";
+        services.AddSingleton(new OllamaOptions { DefaultModel = ollamaDefaultModel });
 
         return services;
     }

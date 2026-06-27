@@ -9,3 +9,8 @@ export interface StreamChatCommand {
   model: string;
   messages: ChatMessage[];
 }
+
+export interface ChatModelsResult {
+  models: string[];
+  defaultModel: string;
+}

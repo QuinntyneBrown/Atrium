@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, Input, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  DestroyRef,
+  ElementRef,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,8 +35,10 @@ import { ChatSignalrService } from '../chat-signalr.service';
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.scss',
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit, AfterViewChecked {
   @Input() systemPrompt?: string;
+  @ViewChild('messagesContainer')
+  private messagesContainer?: ElementRef<HTMLElement>;
 
   models: string[] = [];
   selectedModel = '';
@@ -36,17 +46,42 @@ export class ChatComponent implements OnInit {
   draft = '';
   streaming = false;
 
+  /** Keep the view pinned to the latest message unless the user scrolls up. */
+  private stickToBottom = true;
+
   constructor(
     private readonly chatService: ChatService,
     private readonly chatSignalr: ChatSignalrService,
     private readonly destroyRef: DestroyRef,
   ) {}
 
+  ngAfterViewChecked(): void {
+    if (this.stickToBottom) {
+      this.scrollToBottom();
+    }
+  }
+
+  onMessagesScroll(): void {
+    const el = this.messagesContainer?.nativeElement;
+    if (!el) {
+      return;
+    }
+    const distanceFromBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
+    this.stickToBottom = distanceFromBottom < 40;
+  }
+
+  private scrollToBottom(): void {
+    const el = this.messagesContainer?.nativeElement;
+    if (el) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }
+
   ngOnInit(): void {
-    this.chatService.getModels().subscribe((models) => {
+    this.chatService.getModels().subscribe(({ models, defaultModel }) => {
       this.models = models;
       if (!this.selectedModel && models.length > 0) {
-        this.selectedModel = models[0];
+        this.selectedModel = models.includes(defaultModel) ? defaultModel : models[0];
       }
     });
   }
@@ -57,6 +92,7 @@ export class ChatComponent implements OnInit {
       return;
     }
 
+    this.stickToBottom = true;
     this.messages.push({ role: 'user', content });
 
     const outgoing: ChatMessage[] = [

@@ -6,7 +6,12 @@
     </mat-select>
   </mat-form-field>
 
-  <div class="chat__messages" data-testid="chat-messages">
+  <div
+    class="chat__messages"
+    data-testid="chat-messages"
+    #messagesContainer
+    (scroll)="onMessagesScroll()"
+  >
     <div
       *ngFor="let message of messages"
       class="chat__message"

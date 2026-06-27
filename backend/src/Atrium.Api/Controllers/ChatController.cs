@@ -14,6 +14,6 @@ public class ChatController : ControllerBase
 
     /// <summary>Lists the models available from the local Ollama server (for the chat model picker).</summary>
     [HttpGet("models")]
-    public async Task<ActionResult<IReadOnlyList<string>>> Models(CancellationToken cancellationToken)
+    public async Task<ActionResult<ChatModelsResult>> Models(CancellationToken cancellationToken)
         => Ok(await _sender.Send(new GetModelsQuery(), cancellationToken));
 }
