@@ -25,6 +25,8 @@ e2e/playwright-report/
 e2e/blob-report/
 e2e/.playwright/
 playwright/.cache/
+# ad-hoc repro scripts / screenshots, not part of the suite
+e2e/_*
 
 # ---- IDE / OS ----
 .idea/
